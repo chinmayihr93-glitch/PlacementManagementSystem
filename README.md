@@ -26,6 +26,20 @@ The system helps colleges manage student placement activities efficiently.
 -open in browser:
 -http://127.0.0.1:5000/
 
+## Screenshots
+-Student Registration Page
+![Student Registration](register.png)
+
+-Student Dashboard
+![Dashboard](dashboard.png)
+
+-Admin Dashboard
+![Dashboard](dashboard.png)
+
+-Student List
+![Students](students.png)
+
+
 ## Author
 Chinmayi H R 
 Aspiring Cloud Engineer | Information Science Student 
