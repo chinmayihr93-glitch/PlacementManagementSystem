@@ -3,21 +3,21 @@
 This is a web-based Placement Management System developed using Flask and MySQL.
 The system helps colleges manage student placement activities efficiently.
 
-Features
+Features:
 Student login and registration
 Apply for company job roles
 Track application status
 Admin dashboard to manage applications
 Update placement status
 
-Technologies Used
+Technologies Used:
 Python
 Flask
 MySQL
 HTML
 CSS
 
-How to Run the Project
+How to Run the Project:
 Clone the repository
 Install required libraries
 Setup MySQL database
