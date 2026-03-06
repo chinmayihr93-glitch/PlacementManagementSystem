@@ -1,0 +1,30 @@
+<h2>Admin Login</h2>
+<form id="adminLogin">
+    <input type="text" id="username" placeholder="Username" required><br><br>
+    <input type="password" id="password" placeholder="Password" required><br><br>
+    <button type="submit">Login</button>
+</form>
+
+<script>
+document.getElementById("adminLogin").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    const response = await fetch("/admin_login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+    });
+
+    const data = await response.json();
+
+    if (data.token) {
+        localStorage.setItem("admin_token", data.token);
+        window.location.href = "/admin_dashboard";
+    } else {
+        alert("Login Failed");
+    }
+});
+</script>

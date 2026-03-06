@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Applications</title>
+</head>
+<body>
+    <h2>My Applications</h2>
+    <button onclick="loadApplications()">Load Applications</button>
+    <ul id="applications"></ul>
+    <h2>Available Jobs</h2>
+    <button onclick="loadJobs()">Load Jobs</button>
+    <ul id="jobs"></ul>
+
+    <script>
+        async function loadApplications() {
+            const token = localStorage.getItem("token");
+
+            const response = await fetch("/my_applications", {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            });
+
+            const data = await response.json();
+
+            const list = document.getElementById("applications");
+            list.innerHTML = "";
+
+            data.forEach(app => {
+                const li = document.createElement("li");
+                li.textContent = app.company_name + " - " + app.role + " - " + app.status;
+                list.appendChild(li);
+            });
+        }
+        async function loadJobs() {
+    const response = await fetch("/all_jobs");
+    const data = await response.json();
+
+    const list = document.getElementById("jobs");
+    list.innerHTML = "";
+
+    data.forEach(job => {
+        const li = document.createElement("li");
+
+        li.innerHTML = `
+            ${job.company_name} - ${job.role} - ${job.salary}
+            <button onclick="applyJob(${job.id})">Apply</button>
+        `;
+
+        list.appendChild(li);
+    });
+}
+
+async function applyJob(jobId) {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch("/apply_job", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify({ job_id: jobId })
+    });
+
+    const data = await response.json();
+    alert(data.message || data.error);
+}
+    </script>
+</body>
+</html>

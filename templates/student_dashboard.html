@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            margin: 0;
+        }
+
+        .container {
+            width: 85%;
+            margin: auto;
+            margin-top: 40px;
+        }
+
+        h2 {
+            text-align: center;
+            color: white;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        button {
+            padding: 6px 12px;
+            background-color: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #16325c;
+        }
+
+        .Applied { color: orange; font-weight: bold; }
+        .Shortlisted { color: blue; font-weight: bold; }
+        .Selected { color: green; font-weight: bold; }
+        .Rejected { color: red; font-weight: bold; }
+        .Technical\ Round { color: purple; font-weight: bold; }
+        .HR\ Round { color: brown; font-weight: bold; }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Student Dashboard</h2>
+
+    <!-- 💼 Available Jobs -->
+    <div class="card">
+        <h3>Available Jobs</h3>
+
+        <table>
+            <tr>
+                <th>Company</th>
+                <th>Role</th>
+                <th>Salary</th>
+                <th>Action</th>
+            </tr>
+
+            {% for job in jobs %}
+            <tr>
+                <td>{{ job.company_name }}</td>
+                <td>{{ job.role }}</td>
+                <td>{{ job.salary }}</td>
+                <td>
+                    <form action="/apply_job_from_dashboard" method="POST">
+                        <input type="hidden" name="student_id" value="{{ student_id }}">
+                        <input type="hidden" name="job_id" value="{{ job.id }}">
+                        <button type="submit">Apply</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- 📊 My Applications -->
+    <div class="card">
+        <h3>My Applications</h3>
+
+        <table>
+            <tr>
+                <th>Company</th>
+                <th>Role</th>
+                <th>Salary</th>
+                <th>Status</th>
+            </tr>
+
+            {% for app in applications %}
+            <tr>
+                <td>{{ app.company_name }}</td>
+                <td>{{ app.role }}</td>
+                <td>{{ app.salary }}</td>
+                <td class="{{ app.status }}">{{ app.status }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #1f4037, #99f2c8);
+            margin: 0;
+        }
+
+        .container {
+            width: 85%;
+            margin: auto;
+            margin-top: 40px;
+        }
+
+        h2 {
+            text-align: center;
+            color: white;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+        }
+
+        input {
+            padding: 8px;
+            margin: 5px 0;
+            width: 100%;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #1f4037;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #14532d;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .Applied { color: orange; font-weight: bold; }
+        .Shortlisted { color: blue; font-weight: bold; }
+        .Selected { color: green; font-weight: bold; }
+        .Rejected { color: red; font-weight: bold; }
+
+        .search-box {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    
+
+    <!-- 🔍 Search -->
+    <div class="card">
+        <form method="GET" action="/admin_dashboard" class="search-box">
+            <input type="text" name="search" placeholder="Search by student name">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- 📊 Applications Table -->
+    <div class="card">
+        <h3>All Applications</h3>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Student</th>
+                <th>Company</th>
+                <th>Role</th>
+                <th>Status</th>
+            </tr>
+
+            {% for app in applications %}
+            <tr>
+                <td>{{ app.id }}</td>
+                <td>{{ app.name }}</td>
+                <td>{{ app.company_name }}</td>
+                <td>{{ app.role }}</td>
+                <td>
+    <form action="/update_status_from_dashboard" method="POST">
+        <input type="hidden" name="application_id" value="{{ app.id }}">
+
+        <select name="status">
+            <option value="Applied">Applied</option>
+            <option value="Shortlisted">Shortlisted</option>
+            <option value="Technical Round">Technical Round</option>
+            <option value="HR Round">HR Round</option>
+            <option value="Selected">Selected</option>
+            <option value="Rejected">Rejected</option>
+        </select>
+
+        <button type="submit">Update</button>
+    </form>
+
+    <div class="{{ app.status }}">
+        {{ app.status }}
+    </div>
+</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
+</div>
+
+</script>
+</body>
+</html>
